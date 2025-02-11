@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     cfg.sync();
 
     // Read
-    // Similarly we support getValue(WString key).
+    // Similarly we support getValue(QString key).
     qDebug() << cfg["name"];
     qDebug() << cfg["num"];
     qDebug() << cfg["Boolean"];
