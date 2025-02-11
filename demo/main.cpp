@@ -22,5 +22,5 @@ int main(int argc, char *argv[])
     qDebug() << cfg["name"];
     qDebug() << cfg["num"];
 
-    return a.exec();
+    return 0;
 }
