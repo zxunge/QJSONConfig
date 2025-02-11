@@ -5,11 +5,11 @@ set(PROJECT_NAME demo)
 set(CMAKE_BUILD_TYPE "Debug")
 set(CMAKE_CXX_STANDARD 11)
 
-find_package(Qt5 COMPONENTS Widgets Core Gui)
-if (${Qt5_FOUND})
-    message("Found Qt " ${Qt5_VERSION})
+find_package(Qt COMPONENTS Widgets Core Gui)
+if (${Qt_FOUND})
+    message("-- Found Qt " ${Qt5_VERSION})
 else()
-    message("Couldn't find Qt")
+    message("-- Couldn't find Qt")
 endif()
 
 include_directories(
@@ -22,7 +22,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
+    Qt::Core
+    Qt::Gui
+    Qt::Widgets
 )
