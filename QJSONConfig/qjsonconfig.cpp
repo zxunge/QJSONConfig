@@ -8,7 +8,7 @@
 #include <QJsonValue>
 #include <QDebug>
 
-bool QJSONCofig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
+/* static */ bool QJSONCofig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
 {
     QTextStream stream(&device);
     stream.setCodec("UTF-8");
@@ -36,7 +36,7 @@ bool QJSONCofig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
         return false;
 }
 
-bool QJSONConfig::writeFunc(QIODevice &device, const QSettings::SettingsMap &map)
+/* static */ bool QJSONConfig::writeFunc(QIODevice &device, const QSettings::SettingsMap &map)
 {
     QTextStream stream(&device);
     stream.setCodec("UTF-8");
