@@ -41,7 +41,7 @@ public:
         : m_cfgFile(filePath) { QSettings::Format format { QSettings::registerFormat("json", &readFunc, &writeFunc) }; m_interSettings = new QSettings(filePath, format); }
     ~QJSONConfig() { delete m_interSettings; }
     
-    bool sync();
+    void sync();
     void clear();
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
     void setValue(const QString& key, const QVariant& value);
