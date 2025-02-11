@@ -71,7 +71,7 @@
     return true;
 }
 
-QVariant QJSONConfig::getValue(const QString& key, const QVariant& defaultValue = QVariant())
+QVariant QJSONConfig::getValue(const QString& key, const QVariant& defaultValue) const
 {
     return m_interSettings->value(cfgKey, defaultValue);
 }
