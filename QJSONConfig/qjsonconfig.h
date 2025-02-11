@@ -22,7 +22,7 @@ public:
 
         // Convert into value (rvalue)
         operator QVariant() const {
-            return container.value(key);
+            return container.m_interSettings->value(key);
         }
 
         // Assignment (lvalue)
@@ -45,7 +45,7 @@ public:
     void clear();
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
     void setValue(const QString& key, const QVariant& value);
-    Proxy &operator[](const QString &cfgKey) { return Proxy(*this, cfgKey); }
+    Proxy operator[](const QString &cfgKey) { return Proxy(*this, cfgKey); }
 
 private:
     static bool readFunc(QIODevice &device, QSettings::SettingsMap &map);
