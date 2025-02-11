@@ -8,7 +8,7 @@
 #include <QJsonValue>
 #include <QDebug>
 
-/* static */ bool QJSONCofig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
+/* static */ bool QJSONConfig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
 {
     QTextStream stream(&device);
     stream.setCodec("UTF-8");
@@ -44,7 +44,7 @@
     QJsonDocument jsonDoc;
 
     // Generate JSON data
-    for (QMap<QString, int>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
+    for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
         obj.insert(itor.key(), itor.value());
     jsonDoc.setObject(obj);
     strean << jsonDoc.toJson(QJsonDocument::Indented);
