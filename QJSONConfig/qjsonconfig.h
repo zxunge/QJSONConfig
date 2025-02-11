@@ -17,22 +17,22 @@ public:
     // Client class: distinguish between lvalue and rvalue
     class Proxy {
     public:
-        Proxy(QVariant& container, QString cfgKey) 
+        Proxy(QJSONConfig& container, QString cfgKey) 
             : container(container), key(cfgKey) {}
 
         // Convert into value (rvalue)
         operator QVariant() const {
-            return container;
+            return container.value(key);
         }
 
         // Assignment (lvalue)
         Proxy& operator=(QVariant value) {
-            m_interSettings->setValue(key, value);
+            container.m_interSettings->setValue(key, value);
             return *this;
         }
 
     private:
-        QVariant& container;
+        QJSONConfig& container;
         QString key;
     };
 
@@ -45,7 +45,7 @@ public:
     void clear();
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
     void setValue(const QString& key, const QVariant& value);
-    Proxy &operator[](const QString &cfgKey) { return Proxy(getValue(cfgKey), cfgKey); }
+    Proxy &operator[](const QString &cfgKey) { return Proxy(*this, cfgKey); }
 
 private:
     static bool readFunc(QIODevice &device, QSettings::SettingsMap &map);
