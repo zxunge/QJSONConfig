@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 find_package(Qt COMPONENTS Widgets Core Gui)
 if (${Qt_FOUND})
-    message("-- Found Qt " ${Qt5_VERSION})
+    message("-- Found Qt " ${Qt_VERSION})
 else()
     message("-- Couldn't find Qt")
 endif()
