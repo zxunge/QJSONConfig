@@ -50,11 +50,6 @@ bool QJSONConfig::writeFunc(QIODevice &device, const QSettings::SettingsMap &map
     strean << jsonDoc.toJson(QJsonDocument::Indented);
 }
 
-QVariant& QJSONConfig::operator[](const QString &cfgKey);
-{
-    return getValue(cfgKey);
-}
-
 QVariant QJSONConfig::getValue(const QString& key, const QVariant& defaultValue = QVariant())
 {
     return m_interSettings->value(cfgKey, defaultValue);
