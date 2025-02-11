@@ -7,6 +7,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QDebug>
+#include <QMetaType>
 
 /* static */ bool QJSONConfig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
 {
@@ -45,9 +46,29 @@
 
     // Generate JSON data
     for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
-        obj.insert(itor.key(), itor.value());
+    {
+        switch(itor.value().type())
+        {
+        case QMetaType::QString:
+            obj.insert(itor.key(), QJsonValue(itor.value().toString()));
+            break;
+        case QMetaType::Int:
+            obj.insert(itor.key(), QJsonValue(itor.value().toInt()));
+            break;
+        case QMetaType::Double:
+            obj.insert(itor.key(), QJsonValue(itor.value().toDouble()));
+            break;
+        case QMetaType::Bool:
+            obj.insert(itor.key(), QJsonValue(itor.value().toBool()));
+            break;
+        default:
+            return false;
+        }
+    }
+        
     jsonDoc.setObject(obj);
-    strean << jsonDoc.toJson(QJsonDocument::Indented);
+    stream << jsonDoc.toJson(QJsonDocument::Indented);
+    return true;
 }
 
 QVariant QJSONConfig::getValue(const QString& key, const QVariant& defaultValue = QVariant())
