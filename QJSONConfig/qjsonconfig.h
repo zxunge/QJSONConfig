@@ -27,7 +27,7 @@ public:
 
         // Assignment (lvalue)
         Proxy& operator=(QVariant value) {
-            m_interSettings->setValue(key, value);
+            setValue(key, value);
             return *this;
         }
 
