@@ -16,8 +16,9 @@ private:
 public:
     explicit ConfigManager(const QString &filePath = "config.json")
         : m_cfgFile(filePath) { QSettings::Format format { QSettings::registerFormat("json", &readFunc, &writeFunc) }; m_interSettings = new QSettings(filePath, format); }
-    bool read();
-    bool save() const;
+    
+    bool sync();
+    void clear();
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
     void setValue(const QString& key, const QVariant& value);
     QVariant &operator[](const QString &cfgKey);
@@ -25,5 +26,4 @@ public:
 private:
     bool readFunc(QIODevice &device, QSettings::SettingsMap &map);
     bool writeFunc(QIODevice &device, const QSettings::SettingsMap &map);
-    bool exists(QString key);
 };
