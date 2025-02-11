@@ -17,8 +17,8 @@ public:
     // Client class: distinguish between lvalue and rvalue
     class Proxy {
     public:
-        Proxy(QVariant& container, QString cfgKry) 
-            : container(container),key(cfgKey) {}
+        Proxy(QVariant& container, QString cfgKey) 
+            : container(container), key(cfgKey) {}
 
         // Convert into value (rvalue)
         operator QVariant() const {
@@ -27,7 +27,7 @@ public:
 
         // Assignment (lvalue)
         Proxy& operator=(QVariant value) {
-            setValue(key, value);
+            m_interSettings->setValue(key, value);
             return *this;
         }
 
@@ -48,6 +48,6 @@ public:
     Proxy &operator[](const QString &cfgKey) { return Proxy(getValue(cfgKey), cfgKey); }
 
 private:
-    bool readFunc(QIODevice &device, QSettings::SettingsMap &map);
-    bool writeFunc(QIODevice &device, const QSettings::SettingsMap &map);
+    static bool readFunc(QIODevice &device, QSettings::SettingsMap &map);
+    static bool writeFunc(QIODevice &device, const QSettings::SettingsMap &map);
 };
