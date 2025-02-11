@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include "qjsonconfig.h"
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
