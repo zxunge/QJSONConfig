@@ -24,17 +24,13 @@ static void mergeJsonObjects(QJsonObject &target, const QJsonObject &source)
                 mergeJsonObjects(mergedObject, sourceValue.toObject());
                 target.insert(key, mergedObject);
             } 
-            else 
-            {
+            else
                 // Else, cover target with source
                 target.insert(key, sourceValue);
-            }
         } 
-        else 
-        {
+        else
             // Directly insert a non-existing key
             target.insert(key, sourceValue);
-        }
     }
 }
 
