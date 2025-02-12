@@ -7,14 +7,11 @@ set(CMAKE_BUILD_TYPE "Debug")
 set(CMAKE_CXX_STANDARD 11)
 
 find_package(Qt6 COMPONENTS Core)
-if (NOT Qt6_FOUND)
-    find_package(Qt5 REQUIRED COMPONENTS Core)
-    if(Qt5_FOUND)
-        message("-- Found Qt " ${Qt_VERSION})
-    else()
-        message(FATAL_ERROR "-- Couldn't find Qt")
-else()
+find_package(Qt5 REQUIRED COMPONENTS Core)
+if (Qt6_FOUND OR Qt5_FOUND)
     message("-- Found Qt " ${Qt_VERSION})
+else()
+    message(FATAL_ERROR "-- Couldn't find Qt")
 endif()
 
 include_directories(
