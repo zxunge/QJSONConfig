@@ -30,10 +30,10 @@ int main(int argc, char *argv[])
 
     // Read
     // Similarly we support getValue(QString key).
-    qDebug() << QVariant(cfg["name"]).toString();
-    qDebug() << QVariant(cfg["num"]).toString();
-    qDebug() << QVariant(cfg["Boolean"]).toString();
-    qDebug() << QVariant(cfg["float"]).toString();
+    qDebug() << QString(cfg["name"]);
+    qDebug() << int(cfg["num"]);
+    qDebug() << biol(cfg["Boolean"]);
+    qDebug() << double(cfg["float"]);
 
     // Clear all the configuration
     // cfg.clear();
