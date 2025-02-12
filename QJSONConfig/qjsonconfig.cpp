@@ -6,8 +6,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QDebug>
-#include <QMetaType>
 #include <QMessageLogger>
 
 // TODO: readFunc & writeFunc: Add nested config items support
