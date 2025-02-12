@@ -6,7 +6,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QMessageLogger>
 
 // For recursive reading
 static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMap &map)
