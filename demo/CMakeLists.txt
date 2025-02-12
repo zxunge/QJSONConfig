@@ -6,8 +6,8 @@ project(${PROJECT_NAME})
 set(CMAKE_BUILD_TYPE "Debug")
 set(CMAKE_CXX_STANDARD 11)
 
-find_package(Qt6 COMPONENTS Core)
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt6 COMPONENTS Widgets Core Gui)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui)
 if (Qt6_FOUND OR Qt5_FOUND)
     message("-- Found Qt " ${Qt_VERSION})
 else()
@@ -23,4 +23,8 @@ add_executable(${PROJECT_NAME}
     main.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} Qt::Core)
+target_link_libraries(${PROJECT_NAME} 
+    Qt::Core
+    Qt::Widgets
+    Qt::Gui
+)
