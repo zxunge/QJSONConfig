@@ -26,8 +26,4 @@ add_executable(${PROJECT_NAME}
     main.cpp
 )
 
-target_link_libraries(${PROJECT_NAME}
-    Qt::Core
-    Qt::Gui
-    Qt::Widgets
-)
+target_link_libraries(${PROJECT_NAME} Qt::Core)
