@@ -56,7 +56,7 @@
     for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
     {
 #if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
-        switch(itor.value().metaType())
+        switch(itor.value().typeId())
 #else
         switch(itor.value().type())
 #endif
