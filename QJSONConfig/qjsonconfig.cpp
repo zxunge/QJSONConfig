@@ -9,15 +9,14 @@
 #include <QMessageLogger>
 
 // For recursive reading
-static void read(const QJsonObject &obj, QSettings::SettingsMap &map)
+static void read(QString &finalKey, const QJsonObject &obj, QSettings::SettingsMap &map)
 {
-    QString finalKey;
     for (const QString &key : obj.keys())
     {
         if (obj[key].isObject())
         {
             finalKey += key + "/";
-            read(obj[key], map);
+            read(finalKey, obj[key], map);
         }
         else
         {
@@ -60,7 +59,7 @@ static void read(const QJsonObject &obj, QSettings::SettingsMap &map)
         return false;
     }
     
-    read(jsonDoc.object(), map);
+    read("", jsonDoc.object(), map);
     return true;
 }
 
