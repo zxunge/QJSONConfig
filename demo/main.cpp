@@ -30,10 +30,10 @@ int main(int argc, char *argv[])
 
     // Read
     // Similarly we support getValue(QString key).
-    qDebug() << cfg["name"];
-    qDebug() << cfg["num"];
-    qDebug() << cfg["Boolean"];
-    qDebug() << cfg["float"];
+    qDebug() << cfg["name"].toString();
+    qDebug() << cfg["num"].toString();
+    qDebug() << cfg["Boolean"].toString();
+    qDebug() << cfg["float"].toString();
 
     // Clear all the configuration
     // cfg.clear();
