@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // Set information gor QSettings.
+    // Set information for QSettings.
     QCoreApplication::setOrganizationName("MySoft");
     QCoreApplication::setOrganizationDomain("mysoft.com");
     QCoreApplication::setApplicationName("Star Runner");
@@ -27,17 +27,21 @@ int main(int argc, char *argv[])
 
     // We also support sub-configuration
     cfg["Foo/Bar"] = 250;
+    cfg["Foo/Boo"] = 150;
+    cfg["Foo/Bar/Boo"] = 200;
 
     // Syncronize the config file
     cfg.sync();
 
     // Read
     // Similarly we support getValue(QString key).
-    qDebug() << QString(cfg["String"]);
-    qDebug() << int(cfg["Integer"]);
-    qDebug() << bool(cfg["Boolean"]);
-    qDebug() << double(cfg["Float"]);
-    qDebug() << int(cfg["Foo/Bar"]);
+    qInfo() << QString(cfg["String"]);
+    qInfo() << int(cfg["Integer"]);
+    qInfo() << bool(cfg["Boolean"]);
+    qInfo() << double(cfg["Float"]);
+    qInfo() << int(cfg["Foo/Bar"]);
+    qInfo() << int(cfg["Foo/Boo"]);
+    qInfo() << int(cfg["Foo/Bar/Boo"]);
 
     // Clear all the configuration
     // cfg.clear();
