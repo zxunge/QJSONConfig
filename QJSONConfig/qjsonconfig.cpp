@@ -16,7 +16,7 @@ static void read(QString &finalKey, const QJsonObject &obj, QSettings::SettingsM
         if (obj[key].isObject())
         {
             finalKey += key + "/";
-            read(finalKey, obj[key], map);
+            read(finalKey, obj[key].toObject(), map);
         }
         else
         {
@@ -85,7 +85,13 @@ static void read(QString &finalKey, const QJsonObject &obj, QSettings::SettingsM
         currentObj.insert(keys.last(), QJsonValue::fromVariant(itor.value()));
 
         // Build the outside QJsonObject
-        for (int i {keys.size() - 2}; i > 0; --i) {
+        for (
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+            qsizetype
+#else
+            int
+#endif
+            i {keys.size() - 2}; i > 0; --i) {
             currentObj[keys[i]] = currentObj;
             currentObj = currentObj[keys[i]].toObject();
         }
