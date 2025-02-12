@@ -17,6 +17,10 @@ int main(int argc, char *argv[])
     // Declare your config instance
     QJSONConfig cfg("conf.json" /* File Name */);
 
+    QTextStream out(stdout);
+    // Empty or not
+    out << cfg.empty() << Qt::endl;
+    
     // Write configurations
     // Currently we only support 4 types of the value of each config item:
     // int, QString, double, bool
@@ -36,8 +40,7 @@ int main(int argc, char *argv[])
     cfg.sync();
 
     // Read
-    // Similarly we support getValue(QString key).
-    QTextStream out(stdout);
+    // Similarly we support getValue(QString key)
     out << QString(cfg["String"]) << Qt::endl;
     out << int(cfg["Integer"]) << Qt::endl;
     out << bool(cfg["Boolean"]) << Qt::endl;
