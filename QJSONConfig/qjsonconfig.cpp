@@ -89,7 +89,7 @@
             obj.insert(itor.key(), QJsonValue(itor.value().toBool()));
             break;
         default:
-            QJCFG_WARNING() << tr("Unsupported type.");
+            QJCFG_WARNING() << QObject::tr("Unsupported type.");
             return false;
         }
     }
