@@ -76,8 +76,8 @@ static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMa
     }
     if (jsonDoc.isEmpty())
     {
-        QJCFG_WARNING() << QObject::tr("Empty config json.");
-        return false;
+        map = QSettings::SettingsMap();
+        return true;
     }
     if (!jsonDoc.isObject()) 
     {
@@ -157,4 +157,9 @@ void QJSONConfig::sync()
 void QJSONConfig::clear()
 {
     m_interSettings->clear();
+}
+
+bool QJSONConfig::empty()
+{
+    return m_interSettings->isEmpty();
 }
