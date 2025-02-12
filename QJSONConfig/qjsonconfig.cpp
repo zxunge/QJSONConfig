@@ -70,11 +70,8 @@
         QJsonObject* currentObj {&obj};
 
         for (int i {}; i < keys.size() - 1; ++i) {
-            const QString& currentKey {keys[i]};
-            if (!currentObj->contains(currentKey) || !(*currentObj)[currentKey].isObject()) {
-                (*currentObj)[currentKey] = QJsonObject();
-            }
-            currentObj = &(*currentObj)[currentKey].toObject();
+            (*currentObj)[keys[i]] = QJsonObject();
+            currentObj = &((*currentObj)[keys[i]].toObject());
         }
 
         const QString& lastKey = keys.last();
