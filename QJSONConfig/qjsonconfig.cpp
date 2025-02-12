@@ -59,7 +59,7 @@ static void read(QString &finalKey, const QJsonObject &obj, QSettings::SettingsM
         return false;
     }
     
-    read("", jsonDoc.object(), map);
+    read(QString(""), jsonDoc.object(), map);
     return true;
 }
 
