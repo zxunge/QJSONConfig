@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     cfg["Foo/Bar"] = 250;
     cfg["Foo/Boo"] = 150;
     cfg["Foo/Bar/Boo"] = 200;
+    cfg["B/F/G/K"] = 200;
 
     // Syncronize the config file
     cfg.sync();
