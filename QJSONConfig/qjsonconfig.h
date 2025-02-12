@@ -7,6 +7,8 @@
 #include <QVariant>
 #include <QIODevice>
 #include <QObject>
+#include <QDebug>
+#include <QMetaType>
 
 #define QJCFG_WARNING QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).warning
 
