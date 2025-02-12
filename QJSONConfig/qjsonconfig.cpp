@@ -105,7 +105,7 @@ static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMa
     for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
     {
         QStringList keys {itor.key().split('/')};
-        QJsonObject currentObj;
+        QJsonObject currentObj, superObj;
 
         // Build the deepest QJsonObject
         currentObj.insert(keys.last(), QJsonValue::fromVariant(itor.value()));
@@ -117,9 +117,11 @@ static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMa
 #else
             int
 #endif
-            i {keys.size() - 2}; i > 0; --i) {
-            currentObj[keys[i]] = currentObj;
-            currentObj = currentObj[keys[i]].toObject();
+            i {keys.size() - 2}; i > 0; --i) 
+        {
+            superObj[keys[i]] = currentObj;
+            currentObj.swap(superObj);
+            superObj = QJsonObject();
         }
         // Already root?
         if (keys.size() != 1)
