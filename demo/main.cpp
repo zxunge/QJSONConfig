@@ -35,5 +35,8 @@ int main(int argc, char *argv[])
     qDebug() << cfg["Boolean"];
     qDebug() << cfg["float"];
 
+    // Clear all the configuration
+    // cfg.clear();
+
     return 0;
 }
