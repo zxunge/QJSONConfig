@@ -161,5 +161,5 @@ void QJSONConfig::clear()
 
 bool QJSONConfig::empty()
 {
-    return m_interSettings->isEmpty();
+    return m_interSettings->allKeys().empty();
 }
