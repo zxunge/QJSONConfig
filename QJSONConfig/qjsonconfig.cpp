@@ -13,8 +13,6 @@
 
 #define QJCFG_WARNING QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).warning
 
-using QObject::tr;
-
 // TODO: readFunc & writeFunc: Add nested config items support
 /* static */ bool QJSONConfig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
 {
@@ -30,22 +28,22 @@ using QObject::tr;
 
     if (jsonDoc.isNull())
     {
-        QJCFG_WARNING() << tr("Null config json.");
+        QJCFG_WARNING() << QObject::tr("Null config json.");
         return false;
     }
     if (jsonError.error != QJsonParseError::NoError)
     {
-        QJCFG_WARNING() << tr("JSON parse error:") << jsonError.errorString();
+        QJCFG_WARNING() << QObject::tr("JSON parse error:") << jsonError.errorString();
         return false;
     }
     if (jsonDoc.isEmpty())
     {
-        QJCFG_WARNING() << tr("Empty config json.");
+        QJCFG_WARNING() << QObject::tr("Empty config json.");
         return false;
     }
     if (!jsonDoc.isObject()) 
     {
-        QJCFG_WARNING() << tr("json's not object.");
+        QJCFG_WARNING() << QObject::tr("json's not object.");
         return false;
     }
             
@@ -79,7 +77,7 @@ using QObject::tr;
 #endif
         {
         case QMetaType::QString:
-            obj.insert(itor.key(), QJsonVaue(itor.value().toString()));
+            obj.insert(itor.key(), QJsonValue(itor.value().toString()));
             break;
         case QMetaType::Int:
             obj.insert(itor.key(), QJsonValue(itor.value().toInt()));
