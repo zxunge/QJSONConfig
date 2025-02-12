@@ -75,7 +75,7 @@
         }
 
         const QString& lastKey = keys.last();
-        (*currentObj)[lastKey] = QJsonValue::fromVariant(itor.value());
+        currentObj[lastKey] = QJsonValue::fromVariant(itor.value());
         
         // obj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
     }
