@@ -73,11 +73,11 @@
         currentObj.insert(keys.last(), QJsonValue::fromVariant(itor.value()));
 
         // Build the outside QJsonObject
-        for (int i {keys.size() - 2}; i >= 0; --i) {
+        for (int i {keys.size() - 2}; i > 0; --i) {
             currentObj[keys[i]] = currentObj;
             currentObj = currentObj[keys[i]].toObject();
         }
-        rootObj = currentObj;
+        rootObj.insert(keys[0], currentObj);
         
         // obj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
     }
