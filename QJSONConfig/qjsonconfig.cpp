@@ -7,6 +7,37 @@
 #include <QJsonObject>
 #include <QJsonValue>
 
+// Merge QJsonObject recursively
+static void mergeJsonObjects(QJsonObject &target, const QJsonObject &source) 
+{
+    for (auto it = source.begin(); it != source.end(); ++it) 
+    {
+        QString key = it.key();
+        QJsonValue sourceValue = it.value();
+        if (target.contains(key)) 
+        {
+            QJsonValue targetValue = target.value(key);
+            // If the current key values are objects in both target and source, then merge them recursively
+            if (targetValue.isObject() && sourceValue.isObject()) 
+            {
+                QJsonObject mergedObject = targetValue.toObject();
+                mergeJsonObjects(mergedObject, sourceValue.toObject());
+                target.insert(key, mergedObject);
+            } 
+            else 
+            {
+                // Else, cover target with source
+                target.insert(key, sourceValue);
+            }
+        } 
+        else 
+        {
+            // Directly insert a non-existing key
+            target.insert(key, sourceValue);
+        }
+    }
+}
+
 // For recursive reading
 static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMap &map)
 {
@@ -72,7 +103,7 @@ static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMa
 #endif
     QJsonObject rootObj;
     QJsonDocument jsonDoc;
-
+    
     // Generate JSON data
     // We also want a nested structure
     for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
@@ -96,9 +127,13 @@ static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMa
         }
         // Already root?
         if (keys.size() != 1)
-            rootObj.insert(keys[0], currentObj);
+        {
+            QJsonObject tempObj;
+            tempObj.insert(keys[0], currentObj);
+            mergeJsonObjects(rootObj, tempObj);
+        }
         else
-            rootObj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
+            rootObj.insert(keys[0], QJsonValue::fromVariant(itor.value()));
     }
         
     jsonDoc.setObject(rootObj);
