@@ -89,6 +89,8 @@ public:
     
     void sync();
     void clear();
+    bool empty();
+
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
     void setValue(const QString& key, const QVariant& value);
     Proxy operator[](const QString &cfgKey) { return Proxy(*this, cfgKey); }
