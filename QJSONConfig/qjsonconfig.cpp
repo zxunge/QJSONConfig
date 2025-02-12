@@ -63,30 +63,24 @@
     QJsonDocument jsonDoc;
 
     // Generate JSON data
+    // We also want a nested structure
     for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
     {
-#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
-        switch(itor.value().typeId())
-#else
-        switch(itor.value().type())
-#endif
-        {
-        case QMetaType::QString:
-            obj.insert(itor.key(), QJsonValue(itor.value().toString()));
-            break;
-        case QMetaType::Int:
-            obj.insert(itor.key(), QJsonValue(itor.value().toInt()));
-            break;
-        case QMetaType::Double:
-            obj.insert(itor.key(), QJsonValue(itor.value().toDouble()));
-            break;
-        case QMetaType::Bool:
-            obj.insert(itor.key(), QJsonValue(itor.value().toBool()));
-            break;
-        default:
-            QJCFG_WARNING() << QObject::tr("Unsupported type.");
-            return false;
+        QStringList keys {itor.key().split('/')};
+        QJsonObject* currentObj {&obj};
+
+        for (int i {}; i < keys.size() - 1; ++i) {
+            const QString& currentKey {keys[i]};
+            if (!currentObj->contains(currentKey) || !(*currentObj)[currentKey].isObject()) {
+                (*currentObj)[currentKey] = QJsonObject();
+            }
+            currentObj = &(*currentObj)[currentKey].toObject();
         }
+
+        const QString& lastKey = keys.last();
+        (*currentObj)[lastKey] = QJsonValue::fromVariant(value);
+        
+        // obj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
     }
         
     jsonDoc.setObject(obj);
