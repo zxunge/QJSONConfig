@@ -6,6 +6,9 @@
 #include <QSettings>
 #include <QVariant>
 #include <QIODevice>
+#include <QObject>
+
+#define QJCFG_WARNING QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).warning
 
 class QJSONConfig
 {
@@ -23,6 +26,46 @@ public:
         // Convert into value (rvalue)
         operator QVariant() const {
             return container.m_interSettings->value(key);
+        }
+
+        operator QString() const {
+            return container.m_interSettings->value(key).toString();
+        }
+
+        operator int() const {
+            if(container.m_interSettings->value(key).
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+                typeId()
+#else
+                type()
+#endif
+                != QMetaType::Int)
+                QJCFG_WARNING() << QObject::tr("Incorrect type.");          
+            return container.m_interSettings->value(key).toInt();
+        }
+
+        operator double() const {
+            if(container.m_interSettings->value(key).
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+                typeId()
+#else
+                type()
+#endif
+                != QMetaType::Double)
+                QJCFG_WARNING() << QObject::tr("Incorrect type.");
+            return container.m_interSettings->value(key).toDouble();
+        }
+
+        operator bool() const {
+            if(container.m_interSettings->value(key).
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+                typeId()
+#else
+                type()
+#endif
+                != QMetaType::Bool)
+                QJCFG_WARNING() << QObject::tr("Incorrect type.");
+            return container.m_interSettings->value(key).toBool();
         }
 
         // Assignment (lvalue)
