@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QMetaType>
 #include <QMessageLogger>
+#include <QObject>
 
 #define QJCFG_WARNING QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).warning
 
@@ -24,24 +25,34 @@
     QJsonParseError jsonError;
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8(), &jsonError);
 
-    if (!jsonDoc.isNull() && jsonError.error == QJsonParseError::NoError && !jsonDoc.isEmpty())
+    if (jsonDoc.isNull())
     {
-        if (jsonDoc.isObject()) 
-        {
-            QJsonObject obj = jsonDoc.object();
-            for(const QString &key: obj.keys())
-            {
-                QJsonValue jvalue = obj[key];
-                map.insert(key, jvalue);
-            }
-        }
-        else
-            return false;
-      
-        return true;
-    }
-    else
+        QJCFG_WARNING() << tr("Null config json.");
         return false;
+    }
+    if (jsonError.error != QJsonParseError::NoError)
+    {
+        QJCFG_WARNING() << tr("JSON parse error:") << jsonError.errorString();
+        return false;
+    }
+    if (jsonDoc.isEmpty())
+    {
+        QJCFG_WARNING() << tr("Empty config json.");
+        return false;
+    }
+    if (!jsonDoc.isObject()) 
+    {
+        QJCFG_WARNING() << tr("json's not object.");
+        return false;
+    }
+            
+    QJsonObject obj = jsonDoc.object();
+    for(const QString &key: obj.keys())
+    {
+        QJsonValue jvalue = obj[key];
+        map.insert(key, jvalue);
+    }        
+    return true;
 }
 
 /* static */ bool QJSONConfig::writeFunc(QIODevice &device, const QSettings::SettingsMap &map)
@@ -65,7 +76,7 @@
 #endif
         {
         case QMetaType::QString:
-            obj.insert(itor.key(), QJsonValue(itor.value().toString()));
+            obj.insert(itor.key(), QJsonVaue(itor.value().toString()));
             break;
         case QMetaType::Int:
             obj.insert(itor.key(), QJsonValue(itor.value().toInt()));
@@ -77,6 +88,7 @@
             obj.insert(itor.key(), QJsonValue(itor.value().toBool()));
             break;
         default:
+            QJCFG_WARNING() << tr("Unsupported type.");
             return false;
         }
     }
