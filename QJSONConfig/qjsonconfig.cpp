@@ -8,6 +8,9 @@
 #include <QJsonValue>
 #include <QDebug>
 #include <QMetaType>
+#include <QMessageLogger>
+
+#define QJCFG_WARNING QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).warning
 
 /* static */ bool QJSONConfig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
 {
