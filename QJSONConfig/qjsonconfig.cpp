@@ -12,7 +12,11 @@
 /* static */ bool QJSONConfig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
 {
     QTextStream stream(&device);
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+    stream.setEncoding(QStringConverter::Utf8);
+#else
     stream.setCodec("UTF-8");
+#endif
     QString data { stream.readAll() };
     QJsonParseError jsonError;
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8(), &jsonError);
@@ -40,14 +44,22 @@
 /* static */ bool QJSONConfig::writeFunc(QIODevice &device, const QSettings::SettingsMap &map)
 {
     QTextStream stream(&device);
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+    stream.setEncoding(QStringConverter::Utf8);
+#else
     stream.setCodec("UTF-8");
+#endif
     QJsonObject obj;
     QJsonDocument jsonDoc;
 
     // Generate JSON data
     for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
     {
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+        switch(itor.value().metaType())
+#else
         switch(itor.value().type())
+#endif
         {
         case QMetaType::QString:
             obj.insert(itor.key(), QJsonValue(itor.value().toString()));
