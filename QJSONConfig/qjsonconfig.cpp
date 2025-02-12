@@ -8,7 +8,25 @@
 #include <QJsonValue>
 #include <QMessageLogger>
 
-// TODO: readFunc & writeFunc: Add nested config items support
+// For recursive reading
+static void read(const QJsonObject &obj, QSettings::SettingsMap &map)
+{
+    QString finalKey;
+    for (const QString &key : obj.keys())
+    {
+        if (obj[key].isObject())
+        {
+            finalKey += key + "/";
+            read(obj[key], map);
+        }
+        else
+        {
+            finalKey += key;
+            map.insert(finalKey, obj[key].toVariant());
+        }
+    }
+}
+
 /* static */ bool QJSONConfig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
 {
     QTextStream stream(&device);
@@ -41,13 +59,8 @@
         QJCFG_WARNING() << QObject::tr("json's not object.");
         return false;
     }
-            
-    QJsonObject obj = jsonDoc.object();
-    for(const QString &key: obj.keys())
-    {
-        QJsonValue jvalue = obj[key];
-        map.insert(key, jvalue);
-    }        
+    
+    read(jsonDoc.object(), map);
     return true;
 }
 
