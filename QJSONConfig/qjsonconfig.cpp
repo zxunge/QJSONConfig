@@ -67,15 +67,15 @@
     for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
     {
         QStringList keys {itor.key().split('/')};
-        QJsonObject* currentObj {&obj};
+        QJsonObject currentObj {obj};
 
         for (int i {}; i < keys.size() - 1; ++i) {
-            (*currentObj)[keys[i]] = QJsonObject();
-            currentObj = &((*currentObj)[keys[i]].toObject());
+            currentObj[keys[i]] = QJsonObject();
+            currentObj = currentObj[keys[i]].toObject();
         }
 
         const QString& lastKey = keys.last();
-        (*currentObj)[lastKey] = QJsonValue::fromVariant(value);
+        (*currentObj)[lastKey] = QJsonValue::fromVariant(itor.value());
         
         // obj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
     }
