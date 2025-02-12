@@ -77,9 +77,11 @@
             currentObj[keys[i]] = currentObj;
             currentObj = currentObj[keys[i]].toObject();
         }
-        rootObj.insert(keys[0], currentObj);
-        
-        // obj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
+        // Already root?
+        if (keys.size() != 1)
+            rootObj.insert(keys[0], currentObj);
+        else
+            rootObj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
     }
         
     jsonDoc.setObject(rootObj);
