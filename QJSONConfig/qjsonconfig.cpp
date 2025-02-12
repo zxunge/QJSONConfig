@@ -59,7 +59,7 @@
 #else
     stream.setCodec("UTF-8");
 #endif
-    QJsonObject obj;
+    QJsonObject rootObj;
     QJsonDocument jsonDoc;
 
     // Generate JSON data
@@ -67,20 +67,22 @@
     for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
     {
         QStringList keys {itor.key().split('/')};
-        QJsonObject currentObj {obj};
+        QJsonObject currentObj;
 
-        for (int i {}; i < keys.size() - 1; ++i) {
-            currentObj[keys[i]] = QJsonObject();
+        // Build the deepest QJsonObject
+        currentObj.insert(keys.last(), QJsonValue::fromVariant(itor.value()));
+
+        // Build the outside QJsonObject
+        for (int i {keys.size() - 2}; i >= 0; --i) {
+            currentObj[keys[i]] = currentObj;
             currentObj = currentObj[keys[i]].toObject();
         }
-
-        const QString& lastKey = keys.last();
-        currentObj[lastKey] = QJsonValue::fromVariant(itor.value());
+        rootObj = currentObj;
         
         // obj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
     }
         
-    jsonDoc.setObject(obj);
+    jsonDoc.setObject(rootObj);
     stream << jsonDoc.toJson(QJsonDocument::Indented);
     return true;
 }
