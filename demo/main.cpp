@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     // Similarly we support getValue(QString key).
     qDebug() << QString(cfg["name"]);
     qDebug() << int(cfg["num"]);
-    qDebug() << biol(cfg["Boolean"]);
+    qDebug() << bool(cfg["Boolean"]);
     qDebug() << double(cfg["float"]);
 
     // Clear all the configuration
