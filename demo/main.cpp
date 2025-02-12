@@ -20,20 +20,24 @@ int main(int argc, char *argv[])
     // Currently we only support 4 types of the value of each config item:
     // int, QString, double, bool
     // It is ok by setValue(QString key, QVariant val).
-    cfg["name"] = "name";
-    cfg["num"] = 1;
+    cfg["String"] = "name";
+    cfg["Integer"] = 1;
     cfg["Boolean"] = true;
-    cfg["float"] = 1.8;
+    cfg["Float"] = 1.8;
+
+    // We also support sub-configuration
+    cfg["Foo/Bar"] = 250;
 
     // Syncronize the config file
     cfg.sync();
 
     // Read
     // Similarly we support getValue(QString key).
-    qDebug() << QString(cfg["name"]);
-    qDebug() << int(cfg["num"]);
+    qDebug() << QString(cfg["String"]);
+    qDebug() << int(cfg["Integer"]);
     qDebug() << bool(cfg["Boolean"]);
-    qDebug() << double(cfg["float"]);
+    qDebug() << double(cfg["Float"]);
+    qDebug() << int(cfg["Foo/Bar"]);
 
     // Clear all the configuration
     // cfg.clear();
