@@ -2,7 +2,8 @@
 
 #include <QApplication>
 #include "qjsonconfig.h"
-#include <QDebug>
+#include <QTextStream>
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
@@ -35,13 +36,14 @@ int main(int argc, char *argv[])
 
     // Read
     // Similarly we support getValue(QString key).
-    qInfo() << QString(cfg["String"]);
-    qInfo() << int(cfg["Integer"]);
-    qInfo() << bool(cfg["Boolean"]);
-    qInfo() << double(cfg["Float"]);
-    qInfo() << int(cfg["Foo/Bar"]);
-    qInfo() << int(cfg["Foo/Boo"]);
-    qInfo() << int(cfg["Foo/Bar/Boo"]);
+    QTextStream out(stdout);
+    out << QString(cfg["String"]) << Qt::endl;
+    out << int(cfg["Integer"]) << Qt::endl;
+    out << bool(cfg["Boolean"]) << Qt::endl;
+    out << double(cfg["Float"]) << Qt::endl;
+    out << int(cfg["Foo/Bar"]) << Qt::endl;
+    out << int(cfg["Foo/Boo"]) << Qt::endl;
+    out << int(cfg["Foo/Bar/Boo"]) << Qt::endl;
 
     // Clear all the configuration
     // cfg.clear();
