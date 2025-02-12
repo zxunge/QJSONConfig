@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        qt-version: [5, 6]
+        qt-version: [qt5, qt6]
 
     steps:
     - name: Setup MSYS2 Environment
@@ -22,7 +22,7 @@ jobs:
           mingw-w64-x86_64-toolchain
           mingw-w64-x86_64-cmake
           mingw-w64-x86_64-ninja
-          mingw-w64-x86_64-qt${{ matrix.qt-version }}
+          mingw-w64-x86_64-${{ matrix.qt-version }}
 
     - name: Checkout
       uses: actions/checkout@v4
