@@ -13,6 +13,7 @@
 
 #define QJCFG_WARNING QMessageLogger(__FILE__, __LINE__, Q_FUNC_INFO).warning
 
+// TODO: readFunc & writeFunc: Add nested config items support
 /* static */ bool QJSONConfig::readFunc(QIODevice &device, QSettings::SettingsMap &map)
 {
     QTextStream stream(&device);
