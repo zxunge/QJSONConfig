@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     // Clear all the configuration
     // cfg.clear();
 
-    // Now use another to read those confug items
+    // Now use another to read those config items
     QJSONConfig cfgRead("conf.json");
     out << QString(cfgRead["String"]) << Qt::endl;
     out << int(cfgRead["Integer"]) << Qt::endl;
