@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
     cfg["Foo/Bar"] = 250;
     cfg["Foo/Boo"] = 150;
     cfg["Foo/Bar/Boo"] = 200;
-    cfg["B/F/G/K"] = 200;
 
     // Syncronize the config file
     cfg.sync();
@@ -51,6 +50,16 @@ int main(int argc, char *argv[])
 
     // Clear all the configuration
     // cfg.clear();
+
+    // Now use another to read those confug items
+    QJSONConfig cfgRead("conf.json");
+    out << QString(cfgRead["String"]) << Qt::endl;
+    out << int(cfgRead["Integer"]) << Qt::endl;
+    out << bool(cfgRead["Boolean"]) << Qt::endl;
+    out << double(cfgRead["Float"]) << Qt::endl;
+    out << int(cfgRead["Foo/Bar"]) << Qt::endl;
+    out << int(cfgRead["Foo/Boo"]) << Qt::endl;
+    out << int(cfgRead["Foo/Bar/Boo"]) << Qt::endl;
 
     return 0;
 }
