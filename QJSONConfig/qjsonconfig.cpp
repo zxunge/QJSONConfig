@@ -128,6 +128,7 @@ static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMa
             }
             tempObj.insert(keys[0], currentObj);
             mergeJsonObjects(rootObj, tempObj);
+        }
         else
             rootObj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
     }
