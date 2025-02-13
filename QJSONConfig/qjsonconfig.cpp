@@ -104,34 +104,32 @@ static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMa
     // We also want a nested structure
     for (QMap<QString, QVariant>::const_iterator itor = map.constBegin(); itor != map.constEnd(); ++itor)
     {
-        QStringList keys {itor.key().split('/')};
-        QJsonObject currentObj, superObj;
-
-        // Build the deepest QJsonObject
-        currentObj.insert(keys.last(), QJsonValue::fromVariant(itor.value()));
-
-        // Build the outside QJsonObject
-        for (
-#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
-            qsizetype
-#else
-            int
-#endif
-            i {keys.size() - 2}; i > 0; --i) 
-        {
-            superObj[keys[i]] = currentObj;
-            currentObj.swap(superObj);
-            superObj = QJsonObject();
-        }
         // Already root?
-        if (keys.size() != 1)
+        if (itor.key().contains('/'))
         {
-            QJsonObject tempObj;
+            QStringList keys {itor.key().split('/')};
+            QJsonObject currentObj, superObj, tempObj;
+
+            // Build the deepest QJsonObject
+            currentObj.insert(keys.last(), QJsonValue::fromVariant(itor.value()));
+
+            // Build the outside QJsonObject
+            for (
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+                qsizetype
+#else
+                int
+#endif
+                i {keys.size() - 2}; i > 0; --i) 
+            {
+                superObj[keys[i]] = currentObj;
+                currentObj.swap(superObj);
+                superObj = QJsonObject();
+            }
             tempObj.insert(keys[0], currentObj);
             mergeJsonObjects(rootObj, tempObj);
-        }
         else
-            rootObj.insert(keys[0], QJsonValue::fromVariant(itor.value()));
+            rootObj.insert(itor.key(), QJsonValue::fromVariant(itor.value()));
     }
         
     jsonDoc.setObject(rootObj);
