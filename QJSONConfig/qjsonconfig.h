@@ -99,7 +99,7 @@ public:
     bool empty();
 
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
-    void setValue(const QString& key, const QVariant& value);
+    void setValue(const QString& key, const QVariant& value = QVariant());
     Proxy operator[](const QString &cfgKey) { return Proxy(*this, cfgKey); }
     QVariant operator[](const QString &cfgKey) const { return m_interSettings->value(cfgKey); }
 
