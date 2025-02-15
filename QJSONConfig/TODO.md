@@ -1,3 +1,9 @@
 # Todo List
-1. Improve support for operator [], now it isn't fully compatible with QVariant (Qt itself doesn't provide something returning a ref to QSettings value).
-2. Add common functions.
+1. Add common functions --
+ - allFinalKeys() to see all keys(include sub-keys)
+ - allKeys() to see root keys
+ - childKeys(key) to see keys belonging to key
+ - findKey() to find key(s)
+ - findValue() to find value corresponding to every key
+ - fallback functions
+ - backup functions
