@@ -21,21 +21,25 @@ private:
 
 public:
     // Client class: distinguish between lvalue and rvalue
-    class Proxy {
+    class Proxy 
+    {
     public:
         Proxy(QJSONConfig& container, QString cfgKey) 
             : container(container), key(cfgKey) {}
 
         // Convert into value (rvalue)
-        operator QVariant() const && {
+        operator QVariant() const 
+        {
             return container.m_interSettings->value(key);
         }
 
-        operator QString() const && {
+        operator QString() const 
+        {
             return container.m_interSettings->value(key).toString();
         }
 
-        operator int() const && {
+        operator int() const 
+        {
             if(container.m_interSettings->value(key).
 #if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
                 typeId()
@@ -47,7 +51,8 @@ public:
             return container.m_interSettings->value(key).toInt();
         }
 
-        operator double() const && {
+        operator double() const 
+        {
             if(container.m_interSettings->value(key).
 #if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
                 typeId()
@@ -59,7 +64,8 @@ public:
             return container.m_interSettings->value(key).toDouble();
         }
 
-        operator bool() const && {
+        operator bool() const 
+        {
             if(container.m_interSettings->value(key).
 #if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
                 typeId()
@@ -72,7 +78,8 @@ public:
         }
 
         // Assignment (lvalue)
-        Proxy& operator=(QVariant value) & {
+        Proxy& operator=(QVariant value) 
+        {
             container.m_interSettings->setValue(key, value);
             return *this;
         }
@@ -94,6 +101,7 @@ public:
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
     void setValue(const QString& key, const QVariant& value);
     Proxy operator[](const QString &cfgKey) { return Proxy(*this, cfgKey); }
+    QVariant operator[](const QString &cfgKey) const { return m_interSettings->value(cfgKey); }
 
 private:
     static bool readFunc(QIODevice &device, QSettings::SettingsMap &map);
