@@ -43,26 +43,26 @@ int main(int argc, char *argv[])
 
     // Read
     // Similarly we support getValue(QString key)
-    out << QString(cfg["String"]) << Qt::endl;
-    out << int(cfg["Integer"]) << Qt::endl;
-    out << bool(cfg["Boolean"]) << Qt::endl;
-    out << double(cfg["Float"]) << Qt::endl;
-    out << int(cfg["Foo/Bar"]) << Qt::endl;
-    out << int(cfg["Foo/Boo"]) << Qt::endl;
-    out << int(cfg["Foo/Bar/Boo"]) << Qt::endl;
+    out << cfg["String"].toString() << Qt::endl;
+    out << cfg["Integer"].toInt() << Qt::endl;
+    out << cfg["Boolean"].toBool() << Qt::endl;
+    out << cfg["Float"].toDouble() << Qt::endl;
+    out << cfg["Foo/Bar"].toInt() << Qt::endl;
+    out << cfg["Foo/Boo"].toInt() << Qt::endl;
+    out << cfg["Foo/Bar/Boo"].toInt() << Qt::endl;
 
     // Clear all the configuration
     // cfg.clear();
 
     // Now use another to read those config items
     QJSONConfig cfgRead("conf.json");
-    out << QString(cfgRead["String"]) << Qt::endl;
-    out << int(cfgRead["Integer"]) << Qt::endl;
-    out << bool(cfgRead["Boolean"]) << Qt::endl;
-    out << double(cfgRead["Float"]) << Qt::endl;
-    out << int(cfgRead["Foo/Bar"]) << Qt::endl;
-    out << int(cfgRead["Foo/Boo"]) << Qt::endl;
-    out << int(cfgRead["Foo/Bar/Boo"]) << Qt::endl;
+    out << cfgRead["String"].toString() << Qt::endl;
+    out << cfgRead["Integer"].toInt() << Qt::endl;
+    out << cfgRead["Boolean"].toBool() << Qt::endl;
+    out << cfgRead["Float"].toDouble() << Qt::endl;
+    out << cfgRead["Foo/Bar"].toInt() << Qt::endl;
+    out << cfgRead["Foo/Boo"].toInt() << Qt::endl;
+    out << cfgRead["Foo/Bar/Boo"].toInt() << Qt::endl;
 
     return 0;
 }
