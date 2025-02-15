@@ -19,6 +19,7 @@ private:
     QString m_cfgFile;
     QSettings *m_interSettings;
 
+#ifdef QJSONCFG_PROXY_USED
 public:
     // Client class: distinguish between lvalue and rvalue
     class Proxy 
@@ -88,6 +89,7 @@ public:
         QJSONConfig& container;
         QString key;
     }; 
+#endif
 
 public:
     explicit QJSONConfig(const QString &filePath = "config.json")
@@ -100,7 +102,9 @@ public:
 
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
     void setValue(const QString& key, const QVariant& value = QVariant());
+#ifdef QJSONCFG_PROXY_USED
     Proxy operator[](const QString &cfgKey) { return Proxy(*this, cfgKey); }
+#endif
     QVariant operator[](const QString &cfgKey) const { return m_interSettings->value(cfgKey); }
 
 private:
