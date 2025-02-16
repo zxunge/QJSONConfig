@@ -5,6 +5,8 @@
 #include <QString>
 #include <QSettings>
 #include <QVariant>
+#include <QVector>
+#include <QPair>
 #include <QIODevice>
 #include <QObject>
 #include <QMetaType>
@@ -106,6 +108,15 @@ public:
     Proxy operator[](const QString &cfgKey) { return Proxy(*this, cfgKey); }
 #endif
     QVariant operator[](const QString &cfgKey) const { return m_interSettings->value(cfgKey); }
+
+    // Key-val related functions
+    QStringList allFinalKeys();
+    QStringList allKeys();
+    QStringList childKeys(QString parent);
+    QStringList findKey(QString key);
+    QVector<QPair<QString, QVariant>> findValue(QVariant val);
+
+    // Fallback functions
 
 private:
     static bool readFunc(QIODevice &device, QSettings::SettingsMap &map);
