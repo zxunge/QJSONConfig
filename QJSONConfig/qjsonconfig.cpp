@@ -162,3 +162,8 @@ bool QJSONConfig::empty()
 {
     return m_interSettings->allKeys().empty();
 }
+
+QStringList QJSONConfig::allFinalKeys()
+{
+    return m_interSettings->allKeys();
+}
