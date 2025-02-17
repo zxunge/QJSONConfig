@@ -64,5 +64,8 @@ int main(int argc, char *argv[])
     out << cfgRead["Foo/Boo"].toInt() << Qt::endl;
     out << cfgRead["Foo/Bar/Boo"].toInt() << Qt::endl;
 
+    // All keys, including sub-keys
+    out << cfgRead.allFinalKeys() << Qt::endl;
+
     return 0;
 }
