@@ -4,3 +4,5 @@
  - findValue() to find value corresponding to every key
  - fallback functions
  - backup functions
+
+2. Add detailed documents
