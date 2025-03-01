@@ -203,9 +203,10 @@ QStringList QJSONConfig::childKeys(const QString &parent) const
                 children;
     for (const QString &key : finalKeys)
     {
+        // parent is a root key?
         if (key.startsWith(parent + "/"))
             children << key.mid(QString(parent + "/").size());
-        // parent is root keys / sub-keys?
+        // parent is a sub-key?
         else if (key.contains("/" + parent + "/"))
             children << key.mid(key.indexOf("/" + parent + "/") + QString("/" + parent + "/").size());
         // No children...
