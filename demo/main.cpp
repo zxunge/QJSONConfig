@@ -68,5 +68,13 @@ int main(int argc, char *argv[])
     for (const QString &str : cfgRead.allFinalKeys())
         out << str << Qt::endl;
 
+    // All keys, excluding sub-keys
+    for (const QString &str : cfgRead.allKeys())
+        out << str << Qt::endl;
+
+    // Child keys, including sub-keys
+    for (const QString &str : cfgRead.childKeys("Foo"))
+        out << str << Qt::endl;
+
     return 0;
 }
