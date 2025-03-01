@@ -203,14 +203,14 @@ QStringList QJSONConfig::childKeys(const QString &parent) const
                 children;
     for (const QString &key : finalKeys)
     {
-        // No children...
-        if (key == parent || key.endsWith("/" + parent))
-            break;
+        if (key.startsWith(parent + "/"))
+            children << key.mid(QString(parent + "/").size());
         // parent is root keys / sub-keys?
         else if (key.contains("/" + parent + "/"))
             children << key.mid(key.indexOf("/" + parent + "/") + QString("/" + parent + "/").size());
-        else if (key.startsWith(parent + "/"))
-            children << key.mid(QString(parent + "/").size());
+        // No children...
+        else if (key == parent || key.endsWith("/" + parent))
+            break;
         // No such key!
         else
             break;
