@@ -211,10 +211,10 @@ QStringList QJSONConfig::childKeys(const QString &parent) const
             children << key.mid(key.indexOf("/" + parent + "/") + QString("/" + parent + "/").size());
         // No children...
         else if (key == parent || key.endsWith("/" + parent))
-            break;
+            continue;
         // No such key!
         else
-            break;
+            continue;
     }
     return children;
 }
