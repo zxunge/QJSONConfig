@@ -8,6 +8,8 @@
 #include <QJsonValue>
 
 // Merge QJsonObject recursively
+// If there is an item that is a child of something, 
+// merge it with the existing one rather than just covering.
 static void mergeJsonObjects(QJsonObject &target, const QJsonObject &source) 
 {
     for (auto it = source.begin(); it != source.end(); ++it) 
@@ -79,6 +81,7 @@ static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMa
         map = QSettings::SettingsMap();
         return true;
     }
+    // We just read from an object.
     if (!jsonDoc.isObject()) 
     {
         QJCFG_WARNING() << QObject::tr("json's not object.");
@@ -163,7 +166,54 @@ bool QJSONConfig::empty()
     return m_interSettings->allKeys().empty();
 }
 
+// It is the original keys stored in QSettingsMap, with '/' in it.
 QStringList QJSONConfig::allFinalKeys()
 {
     return m_interSettings->allKeys();
+}
+
+// All primary keys.
+QStringList QJSONConfig::allKeys()
+{
+    QStringList finalKeys { m_interSettings->allKeys() },
+                existingKeys, results;
+    for (const QString &key : finalKeys)
+    {
+        if (key.contains('/'))
+        {
+            QString mainKey { key.split('/')[0] };
+            if (existingKeys.contains(mainKey))
+                continue;
+            else
+            {
+                existingKeys << mainKey;
+                results << mainKey;
+            }
+        }
+        else
+            results << key;
+    }
+    return results;
+}
+
+// Something's children.
+QStringList QJSONConfig::childKeys(const QString &parent)
+{
+    QStringList finalKeys { m_interSettings->allKeys() },
+                children;
+    for (const QString &key : finalKeys)
+    {
+        // No children...
+        if (key == parent || key.endsWith("/" + parent))
+            break;
+        // parent is root keys / sub-keys?
+        else if (key.contains("/" + parent + "/"))
+            children << key.mid(key.indexOf("/" + parent + "/") + QString("/" + parent + "/").size());
+        else if (key.startsWith(parent + "/"))
+            children << key.mid(QString(parent + "/").size());
+        // No such key!
+        else
+            break;
+    }
+    return children;
 }

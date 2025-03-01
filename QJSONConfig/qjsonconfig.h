@@ -110,11 +110,11 @@ public:
     QVariant operator[](const QString &cfgKey) const { return m_interSettings->value(cfgKey); }
 
     // Key-val related functions
-    QStringList allFinalKeys();
-    QStringList allKeys();
-    QStringList childKeys(QString parent);
-    QStringList findKey(QString key);
-    QVector<QPair<QString, QVariant>> findValue(QVariant val);
+    QStringList allFinalKeys() const;
+    QStringList allKeys() const;
+    QStringList childKeys(const QString &parent) const;
+    QStringList findKey(const QString &key) const;
+    QVector<QPair<QString, QVariant>> findValue(const QVariant &val) const;
 
     // Fallback functions
 
