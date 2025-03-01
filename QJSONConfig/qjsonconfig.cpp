@@ -167,13 +167,13 @@ bool QJSONConfig::empty()
 }
 
 // It is the original keys stored in QSettingsMap, with '/' in it.
-QStringList QJSONConfig::allFinalKeys()
+QStringList QJSONConfig::allFinalKeys() const
 {
     return m_interSettings->allKeys();
 }
 
 // All primary keys.
-QStringList QJSONConfig::allKeys()
+QStringList QJSONConfig::allKeys() const
 {
     QStringList finalKeys { m_interSettings->allKeys() },
                 existingKeys, results;
@@ -197,7 +197,7 @@ QStringList QJSONConfig::allKeys()
 }
 
 // Something's children.
-QStringList QJSONConfig::childKeys(const QString &parent)
+QStringList QJSONConfig::childKeys(const QString &parent) const
 {
     QStringList finalKeys { m_interSettings->allKeys() },
                 children;
