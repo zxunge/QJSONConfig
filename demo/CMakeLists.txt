@@ -21,6 +21,7 @@ include_directories(
 )
 
 add_executable(${PROJECT_NAME}
+    ../QJSONConfig/qjsonconfig.h
     ../QJSONConfig/qjsonconfig.cpp
     main.cpp
 )
