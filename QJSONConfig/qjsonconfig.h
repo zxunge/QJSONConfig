@@ -100,7 +100,7 @@ public:
     
     void sync();
     void clear();
-    bool empty();
+    bool empty() const;
 
     QVariant getValue(const QString& key, const QVariant& defaultValue = QVariant()) const;
     void setValue(const QString& key, const QVariant& value = QVariant());
