@@ -224,12 +224,12 @@ QString	QJSONConfig::fileName() const
     return m_interSettings->fileName();
 }
 
-void remove(const QString &key)
+void QJSONConfig::remove(const QString &key)
 {
     m_interSettings->remove(key);
 }
 
-bool contains(const QString &key) const
+bool QJSONConfig::contains(const QString &key) const
 {
     return m_interSettings->contains(key);
 }
