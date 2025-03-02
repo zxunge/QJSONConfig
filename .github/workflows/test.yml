@@ -46,7 +46,7 @@ jobs:
     - name: Install dpendencies
       run: |
         sudo add-apt-repository ppa:beineri/opt-qt-6.0.0-focal
-        sudo add-apt-repository ppa:beineri/opt-qt-5.0.0-focal
+        sudo add-apt-repository ppa:beineri/opt-qt-5.15.2-focal
         sudo apt update
         sudo apt upgrade
         sudo apt install -y build-essential ${{ matrix.qt-version }}-default
