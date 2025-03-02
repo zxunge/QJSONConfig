@@ -48,7 +48,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt upgrade
-        sudo apt install -y build-essential qt5-default
+        sudo apt install -y build-essential qtbase5-dev
 
     - name: Install dpendencies
       if: matrix.qt-version == 'qt6'
