@@ -3,7 +3,7 @@
 #include <QApplication>
 
 // If you want to use the unreliable Proxy class to 
-// acheive "convenient access"(i.e. use operator[] to acheive both reading and writing), you need to
+// acheive "convenient access"(i.e. use operator[] for both reading and writing), you need to
 // define QJSONCFG_PROXY_USED before including the header.
 #include "qjsonconfig.h"
 
@@ -75,6 +75,18 @@ int main(int argc, char *argv[])
     // Child keys, including sub-keys
     for (const QString &str : cfgRead.childKeys("Foo"))
         out << str << Qt::endl;
+
+    // Remove a specific key
+    cfgRead.remove("Foo/Bar/Boo");
+    for (const QString &str : cfgRead.allFinalKeys())
+        out << str << Qt::endl;
+        
+    // Contains the key?
+    out << cfgRead.contains("Foo") << Qt::endl;
+    out << cfgRead.contains("Foo/Bar") << Qt::endl;
+    
+    // What's the configuration file's name?
+    out << cfgRead.fileName() << Qt::endl;
 
     return 0;
 }
