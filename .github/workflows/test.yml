@@ -63,5 +63,3 @@ jobs:
         cd demo/
         cmake .
         cmake --build . --parallel $(nproc)
-        ./demo
-        cat conf.json
