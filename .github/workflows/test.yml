@@ -35,3 +35,26 @@ jobs:
         cmake --build . --parallel $(nproc)
         ./demo.exe
         cat conf.json
+
+  ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        qt-version: [qt5, qt6]
+        
+    steps:
+    - name: Install dpendencies
+      run: |
+        sudo apt update
+        sudo apt install -y build-essential ${{ matrix.qt-version }}-default
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Build and test
+      run: |
+        cd demo/
+        cmake .
+        cmake --build . --parallel $(nproc)
+        ./demo
+        cat conf.json
