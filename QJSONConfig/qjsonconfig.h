@@ -21,7 +21,7 @@ private:
     QString m_cfgFile;
     QSettings *m_interSettings;
 
-#ifdef QJSONCFG_PROXY_USED
+#ifdef QJSONCFG_PROXY_USED        // Unsafe; incomplete; everywhere goes a []
 public:
     // Client class: distinguish between lvalue and rvalue
     class Proxy 
@@ -115,6 +115,11 @@ public:
     QStringList childKeys(const QString &parent) const;
     QStringList findKey(const QString &key) const;
     QVector<QPair<QString, QVariant>> findValue(const QVariant &val) const;
+    void remove(const QString &key);
+    bool contains(const QString &key) const;
+    
+    // Config file related functions
+    QString	fileName() const;
 
     // Fallback functions
 

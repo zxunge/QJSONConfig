@@ -12,17 +12,17 @@
 // merge it with the existing one rather than just covering.
 static void mergeJsonObjects(QJsonObject &target, const QJsonObject &source) 
 {
-    for (auto it = source.begin(); it != source.end(); ++it) 
+    for (auto it { source.begin() }; it != source.end(); ++it) 
     {
-        QString key = it.key();
-        QJsonValue sourceValue = it.value();
+        QString key { it.key() };
+        QJsonValue sourceValue { it.value() };
         if (target.contains(key)) 
         {
-            QJsonValue targetValue = target.value(key);
+            QJsonValue targetValue { target.value(key) };
             // If the current key values are objects in both target and source, then merge them recursively
             if (targetValue.isObject() && sourceValue.isObject()) 
             {
-                QJsonObject mergedObject = targetValue.toObject();
+                QJsonObject mergedObject { targetValue.toObject() };
                 mergeJsonObjects(mergedObject, sourceValue.toObject());
                 target.insert(key, mergedObject);
             } 
@@ -64,7 +64,7 @@ static void read(QString finalKey, const QJsonObject &obj, QSettings::SettingsMa
 #endif
     QString data { stream.readAll() };
     QJsonParseError jsonError;
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8(), &jsonError);
+    QJsonDocument jsonDoc { QJsonDocument::fromJson(data.toUtf8(), &jsonError) };
 
     if (jsonDoc.isNull())
     {
@@ -217,4 +217,19 @@ QStringList QJSONConfig::childKeys(const QString &parent) const
             continue;
     }
     return children;
+}
+
+QString	QJSONConfig::fileName() const
+{
+    return m_interSettings->fileName();
+}
+
+void remove(const QString &key)
+{
+    m_interSettings->remove(key);
+}
+
+bool contains(const QString &key) const
+{
+    return m_interSettings->contains(key);
 }
