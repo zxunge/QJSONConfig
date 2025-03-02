@@ -44,11 +44,19 @@ jobs:
         
     steps:
     - name: Install dpendencies
+      if: ${{ matrix.qt-version }} == "qt5"
       run: |
         sudo add-apt-repository ppa:beineri/opt-qt-5.15.4-focal
         sudo apt update
         sudo apt upgrade
-        sudo apt install -y build-essential ${{ matrix.qt-version }}-default
+        sudo apt install -y build-essential qt5-default
+
+    - name: Install dpendencies
+      if: ${{ matrix.qt-version }} == "qt6"
+      run: |
+        sudo apt update
+        sudo apt upgrade
+        sudo apt install -y qt6-base-dev
 
     - name: Checkout
       uses: actions/checkout@v4
