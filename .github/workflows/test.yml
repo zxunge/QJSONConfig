@@ -53,7 +53,7 @@ jobs:
       if: matrix.qt-version == 'qt6'
       run: |
         sudo apt update
-        sudo apt install -y qt6-base-dev
+        sudo apt install -y build-essential qt6-base-dev
 
     - name: Checkout
       uses: actions/checkout@v4
