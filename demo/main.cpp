@@ -41,21 +41,14 @@ int main(int argc, char *argv[])
     // Syncronize the config file
     cfg.sync();
 
-    // Read
-    // Similarly we support getValue(QString key)
-    out << cfg["String"].toString() << Qt::endl;
-    out << cfg["Integer"].toInt() << Qt::endl;
-    out << cfg["Boolean"].toBool() << Qt::endl;
-    out << cfg["Float"].toDouble() << Qt::endl;
-    out << cfg["Foo/Bar"].toInt() << Qt::endl;
-    out << cfg["Foo/Boo"].toInt() << Qt::endl;
-    out << cfg["Foo/Bar/Boo"].toInt() << Qt::endl;
-
     // Clear all the configuration
     // cfg.clear();
 
-    // Now use another to read those config items
+    // Now use another object to read those config items
     QJSONConfig cfgRead("conf.json");
+    
+    // Read
+    // Similarly we support getValue(QString key)
     out << cfgRead["String"].toString() << Qt::endl;
     out << cfgRead["Integer"].toInt() << Qt::endl;
     out << cfgRead["Boolean"].toBool() << Qt::endl;
